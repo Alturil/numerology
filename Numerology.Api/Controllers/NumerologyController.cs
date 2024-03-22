@@ -7,10 +7,10 @@ namespace Numerology.Api.Controllers;
 [Route("[controller]")]
 public class NumerologyController : Controller
 {
-    private readonly ILogger<WeatherForecastController> _logger;
+    private readonly ILogger<NumerologyController> _logger;
     private readonly INameService _nameService;
 
-    public NumerologyController(ILogger<WeatherForecastController> logger, INameService nameService)
+    public NumerologyController(ILogger<NumerologyController> logger, INameService nameService)
     {
         _logger = logger;
         _nameService = nameService;
