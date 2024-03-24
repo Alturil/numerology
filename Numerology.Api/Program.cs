@@ -11,7 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // AWS Lambda
-builder.Services.AddAWSLambdaHosting(LambdaEventSource.RestApi);
+builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
 
 // Register services
 builder.Services.AddSingleton<ILettersNumberRepository, LettersNumberRepository>();
