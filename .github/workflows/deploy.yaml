@@ -15,16 +15,16 @@ env:
   AWS_REGION: ${{ secrets.AWS_REGION }}
 
 jobs:
-  deploy-lambda-slack:
+  deploy-lambda:
     environment: Development # Production
     runs-on: ubuntu-latest    
     defaults:
       run:
         shell: bash
-        working-directory: ./Numerology/Numerology.Api/
+        working-directory: ./Numerology.Api
     steps:
       - name: Git checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Setup .NET
         uses: actions/setup-dotnet@main
@@ -53,7 +53,7 @@ jobs:
         working-directory: ./Terraform # infra
     steps:
       - name: Git checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Configure AWS credentials from AWS account
         uses: aws-actions/configure-aws-credentials@v1
