@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Setup dotnet
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '8.0.x'
     - name: Install dependencies
@@ -34,7 +34,7 @@ jobs:
         role-to-assume: ${{ secrets.AWS_ROLE }}
     - uses: actions/checkout@v4
     - name: Setup dotnet
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '8.0.x'
     - name: Install dependencies
@@ -46,4 +46,4 @@ jobs:
     - name: Publish AWS lambda
       env:
         AWS_REGION: ${{ secrets.AWS_REGION }}
-      run: dotnet lambda deploy-function --config-file ./aws-lambda-tools-defaults.json
+      run: dotnet lambda deploy-function --project-location ./Numerology.Api --config-file ./aws-lambda-tools-defaults.json
