@@ -46,4 +46,4 @@ jobs:
     - name: Publish AWS lambda
       env:
         AWS_REGION: ${{ secrets.AWS_REGION }}
-      run: dotnet lambda deploy-function --project-location ./Numerology.Api
+      run: dotnet lambda deploy-function --config-file ./aws-lambda-tools-defaults.json
