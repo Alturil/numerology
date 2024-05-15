@@ -46,4 +46,4 @@ jobs:
     - name: Publish AWS lambda
       env:
         AWS_REGION: ${{ secrets.AWS_REGION }}
-      run: cd Numerology.Api; dotnet lambda deploy-function
+      run: cd Numerology.Api; dotnet lambda deploy-function --function-role ${{ secrets.AWS_LAMBDA_EXECUTE_ROLE }}
