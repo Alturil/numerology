@@ -30,7 +30,6 @@ jobs:
     - uses: aws-actions/configure-aws-credentials@v4
       name: Configure AWS Credentials
       with:
-        audience: sts.amazonaws.com.cn
         aws-region: ${{ vars.AWS_REGION }}
         role-to-assume: ${{ vars.AWS_ROLE }}
     - uses: actions/checkout@v4
