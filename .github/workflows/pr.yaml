@@ -19,3 +19,32 @@ jobs:
       run: dotnet build
     - name: Test with dotnet CLI
       run: dotnet test
+
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+    - uses: aws-actions/configure-aws-credentials@v4
+      name: Configure AWS Credentials
+      with:
+        audience: sts.amazonaws.com.cn
+        aws-region: ${{ vars.AWS_REGION }}
+        role-to-assume: arn:aws:iam::097225351326:role/github-oidc-aws-deployment-role
+    - uses: actions/checkout@v4
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build
+    - name: Install AWS lambda tool
+      run: dotnet build
+    - name: Publish AWS lambda
+      env:
+        AWS_REGION: ${{ vars.AWS_REGION }}
+      run: dotnet lambda deploy-function
