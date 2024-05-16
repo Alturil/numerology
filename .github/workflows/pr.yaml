@@ -5,6 +5,7 @@ on:
     branches: [main]
 
 jobs:
+  
   Build:
     runs-on: ubuntu-latest
 
@@ -18,32 +19,3 @@ jobs:
       run: dotnet build
     - name: Run tests
       run: dotnet test
-
-  Deploy:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./Numerology.Api
-    permissions:
-      id-token: write
-      contents: read
-
-    steps:
-    - uses: actions/checkout@v4
-    - name: Setup Dotnet
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.0.x'
-    - name: Install AWS lambda tool
-      run: dotnet tool install --global Amazon.Lambda.Tools
-    - name: Build solution
-      run: dotnet build
-    - uses: aws-actions/configure-aws-credentials@v4
-      name: Configure AWS Credentials
-      with:
-        aws-region: ${{ secrets.AWS_REGION }}
-        role-to-assume: ${{ secrets.AWS_ROLE }}
-    - name: Publish AWS lambda
-      env:
-        AWS_REGION: ${{ secrets.AWS_REGION }}
-      run: dotnet lambda deploy-function --function-role ${{ secrets.AWS_LAMBDA_EXECUTE_ROLE }}
