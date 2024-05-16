@@ -1,23 +1,32 @@
-﻿using Numerology.Api.Repositories;
+﻿using Numerology.Api.Models;
+using Numerology.Api.Repositories;
 using System.Text.RegularExpressions;
 
 namespace Numerology.Api.Services;
 
-public class NameService : INameService
+public class NameService(ILettersNumberRepository lettersNumberRepository, INumberReducerService numberReducerService) : INameService
 {
-    private readonly ILettersNumberRepository _lettersNumberRepository;
-    private readonly Regex validCharacters = new(@"[a-z]|ñ|&");    
+    private readonly ILettersNumberRepository _lettersNumberRepository = lettersNumberRepository;
+    private readonly INumberReducerService _numberReducerService = numberReducerService;
+    private readonly Regex validCharacters = new(@"[a-z]|ñ|&");
 
-    public NameService(ILettersNumberRepository lettersNumberRepository)
+    public NumberValue GetNameReduced(string name)
     {
-        _lettersNumberRepository = lettersNumberRepository;
+        return _numberReducerService.GetNumberValue(GetNameAsNumbers(name));
     }
 
-    public List<int> GetNameNumbers(string name)
+    public int CountCharacters(string name)
     {
-        return name
-        .Where(character => validCharacters.Matches(character.ToString()).Count > 0)
-        .Select(character => _lettersNumberRepository.GetNumber(character))
-        .ToList();
+        return name.ToLower()
+            .Where(character => validCharacters.Matches(character.ToString()).Count > 0)
+            .ToList()
+            .Count;
+    }
+
+    private string GetNameAsNumbers(string name)
+    {
+        return string.Concat(name.ToLower()
+            .Where(character => validCharacters.IsMatch(character.ToString()))
+            .Select(character => _lettersNumberRepository.GetNumber(character).ToString()));
     }
 }
