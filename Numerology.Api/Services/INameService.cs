@@ -1,6 +1,9 @@
-﻿namespace Numerology.Api.Services;
+﻿using Numerology.Api.Models;
+
+namespace Numerology.Api.Services;
 
 public interface INameService
 {
-    List<int> GetNameNumbers(string name);
+    NumberValue GetNameReduced(string name);
+    int CountCharacters(string name);
 }

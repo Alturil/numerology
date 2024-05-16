@@ -12,8 +12,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
 
 // Register services
-builder.Services.AddSingleton<ILettersNumberRepository, LettersNumberRepository>();
-builder.Services.AddSingleton<INameService>(s => new NameService(new LettersNumberRepository()));
+builder.Services.AddTransient<ILettersNumberRepository, LettersNumberRepository>();
+builder.Services.AddTransient<INumberReducerService, NumberReducerService>();
+
+builder.Services.AddTransient<INameService, NameService>();
+builder.Services.AddTransient<IDateOfBirthService, DateOfBirthService>();
+builder.Services.AddTransient<IPersonService, PersonService>();
 
 var app = builder.Build();
 
