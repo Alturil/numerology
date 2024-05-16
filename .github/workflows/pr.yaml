@@ -1,12 +1,13 @@
-name: Dotnet package
+name: Build and Test
 
 on:
   pull_request:
     branches: [main]
 
 jobs:
-  
-  Build:
+
+  BuildAndTest:
+    name: Build and Test
     runs-on: ubuntu-latest
 
     steps:
